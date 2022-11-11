@@ -1,44 +1,48 @@
-\chapter{論文内の参照}
+\chapter{システムの実装方法}
 \label{chp:reference}
 
-\section{脚注}
+\section{システム構成}
 \label{sec:reference_ftnote}
-	文章中に脚注を使用したい場合はfootnoteコマンドを使用します．「\verb|\footnote[番号]{内容}|」のように記述します\footnote[99]{脚注表示例．}．番号を省略した場合には自動で番号が振られます\footnote{番号省略例}．
+本システムは以下のような構成で実装を行う.システム構成図を図3.1に示す.\\
+労務管理支援システムをReactでWebアプリとして作成した.さらにデータベースにCloud Firestore,
+ユーザー認証にFirebase Authentication,表情分析にface-api.jsを使用した。\\
+　次のセクションでは,それぞれのサービスについて説明する.
 
-\section{引用}
+\begin{figure}[!h]
+	\begin{center}
+			\includegraphics[scale=1.2, clip]{./img/compose.png}
+			\caption{システム構成図}
+			\label{fig:図の名前}
+	\end{center}
+\end{figure}
+
+
+\section{React}
 \label{sec:reference_quote}
-	文献等の引用を行う場合には，quote環境またはquotation環境を使用します．\\
-	|quote表示例|
-	\begin{quote}
-		quoteは短文の引用に用いられます．
+	Reactとは, Facebook社が開発したWebサイト上のUIパーツを構築するためのJavaScriptライブラリである.
+	今回のシステム開発にReactを採用した理由は三つある.
 
-		quoteは段落の先頭字下げを行いません．
-	\end{quote}
-	|quotation表示例|
-	\begin{quotation}
-		quotationは長文の引用に用いられます．quotationは段落の先頭字下げを行います．
+	\begin{enumerate}
+		\item パフォーマンスが良い \\
+		Reactには,仮想DOM(Virtual Document Object Model)というレンダリング機構が
+		備わっている.仮装DOMとは、実際のDOMではなく, React内部に持っている 
+		DOMの情報である. Reactを使うと,この仮想DOMと実際のHTML上のDOMを
+		比較したときに出てくる違いだけが,毎回HTML上に再適用される.
+		そのため画面全体がReactで構成されていたとしても,必要な部分しか更新されず
+		非常に高速に動作するため,パフォーマンスが良い.\\
+		\item UIコンポーネントのライブラリが多い \\
+		Reactは、世界中で使われているため、Reactのライブラリを使ってUIをコンポート化
+		するようになってきています。あらかじめButton や Form などの UI パーツを
+		React コンポーネントとして扱えるようにして、セット化したものが多くあります。
+		これらを使えば、今風の洗練された画面を作ることができるでしょう。\\
+		\item JavaScriptの知識があれば使える \\
+	\end{enumerate}
+	
 
-		quote環境とquotation環境では環境外の文章から一段下がって表示されています．
-	\end{quotation}
-
-\section{参考文献}
+\section{face-api.jsについて}
 \label{sec:reference_bib}
-	参考文献があることを示したい場合はciteコマンドを使用します．「\verb|\cite{参考文献}|」のように記述します\cite{Webデザイン}．
+	
 
-	参考文献一覧は巻末に記載しています．citeコマンドの引数にはthebibliography環境内のbibitemコマンドに記載した名前を使用することで，番号が表示されます．thebibliography環境の引数は参考文献の最大数で，配列を宣言する場合と同じ考えです．特に理由がなければ99のままでよいでしょう．
-
-\section{章節番号・図表番号}
+\section{Material-UIについて}
 \label{sec:reference_chapter}
-	章節や図表の番号を参照する場合にはlabelコマンドとrefコマンドを使用します．事前に章節等を記述している部分にlabelコマンドで名前をつけ，呼び出す際にその名前をrefコマンドで使用することで番号を表示することができます．
-
-	呼び出すことのできるのは番号のみのため，前後に言葉を補う必要があります．\\
-	|記述例|
-	\begin{verbatim}
-		\chapter{論文内の参照}
-		\label{chp:reference}
-
-		この部分については第\ref{chp:reference}章を参照してください．
-	\end{verbatim}
-	|表示例|\
-		この部分については第\ref{chp:tex_basic}章(第２章の参照名を確認）参照してください．
 	
