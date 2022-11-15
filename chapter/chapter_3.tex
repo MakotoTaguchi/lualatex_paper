@@ -17,7 +17,7 @@
 \end{figure}
 
 
-\section{React}
+\section{Reactについて}
 \label{sec:reference_quote}
 Reactは,UI（ユーザインタフェース）部分の構築に特化したJavaScriptのライブラリで,
 React.jsとも呼ばれる.
@@ -79,5 +79,47 @@ Tensorflow.jsを活用したJavaScript APIである.
 \end{itemize}
 	
 \section{Material-UIについて}
-\label{sec:reference_chapter}
+\label{sec:reference_material}
+Google社が自社のサービスに統一的なデザインを与えるために作成した,
+デザインのガイドライン,または仕様書であるMaterial Designを
+Reactのコンポーネントとして使えるようにしたものである.
+本研究でMaterial Designを取り入れているのは,ユーザーにとってストレスが少なく,
+みやすく直感的に操作が出来るといった,使いやすさを目的としているためである.
 
+\section{Firebase Authentication}
+\label{sec:reference_auth}
+Firebase Authenticationはユーザー認証機能を提供し,ユーザ情報をクラウドで保存してくれる,
+Google運営のサービスのことである.認証方法には、主に以下が用意されている.
+
+\begin{itemize}
+	\item メールアドレスとパスワードによる認証 \\
+
+	\item 主要なプロバイダーアカウントによる認証 \\
+	（Google / Twitter / Facebook / Github / Apple / Yahoo! / Microsoft 等） \\
+
+	\item 匿名認証 \\
+
+	\item カスタム認証 \\
+
+	\item 電話番号認証 
+\end{itemize}
+
+本アプリでは,メールアドレスとパスワードによる認証を使用してログインを行う.
+Firebase Authenticationを使用した理由は,認証の安全性を外部に任せることができるからである.
+認証システムは,ユーザーの個人情報を預かることになるため,自前で実装するのは危険であり,
+万が一,個人情報が流出してしまうおそれがある.さらに,個人情報を保護して運用していく
+リスクとコストもかかってしまう.
+そこで外部ライブラリを使用することで,問題点を解決できると考えた. \\
+　本システムではFirebase Authenticationのソーシャルログイン機能として
+提供されている,Googleサインインを利用してアプリケーションの認証システムを作成した. 
+GoogleサインインはユーザーのGoogleアカウントを用いてアプリケーションの
+ログインを可能にするシステムである. \\
+　ソーシャルログイン機能を利用することで,ユーザーは本アプリケーションのIDと
+パスワードを覚えておく必要がなくなる.また,IDとパスワードを自分で設定してロ
+グインするよりも手順が減るため,ユーザーにログインしてもらうハードルを低くす
+ることができる. 
+
+\clearpage
+
+\section{Cloud Firestore}
+\label{sec:reference_cloud}
