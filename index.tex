@@ -1,8 +1,27 @@
-%%%%%%%初期設定　start%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%初期設定　start%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \documentclass[12pt]{ltjsreport}%LuaLaTeX対応
 \renewcommand{\bibname}{参考文献} 
-\usepackage{graphicx, ascmac, url, array, ./style/eclbkbox}
+\usepackage{listings,jvlisting,graphicx, ascmac, url, array, ./style/eclbkbox}
+
+\lstset{
+  basicstyle={\ttfamily},
+  identifierstyle={\small},
+  commentstyle={\smallitshape},
+  keywordstyle={\small\bfseries},
+  ndkeywordstyle={\small},
+  stringstyle={\small\ttfamily},
+  frame={tb},
+  breaklines=true,
+  columns=[l]{fullflexible},
+  numbers=left,
+  % xrightmargin=0zw,
+  % xleftmargin=3zw,
+  numberstyle={\scriptsize},
+  stepnumber=1,
+  % numbersep=1zw,
+  lineskip=-0.5ex
+}
 
 \setlength{\textheight}{25cm}		%1ページ当りの行数を指定する
 \setlength{\textwidth}{38\zw}		%1行あたりの文字数の設定
@@ -53,6 +72,8 @@
 
 \input{./chapter/chapter_4}
 
+\input{./chapter/chapter_5}
+
 \newpage
 
 %%%%%%%本文　end%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -73,7 +94,7 @@
 %%%%%%%謝辞　end%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 %%%%%%%参考文献　start%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\begin{thebibliography}{99}\addcontentsline{toc}{chapter}{参考文献}
+\begin{thebibliography}{99}
 
 \bibitem{Webデザイン}
 Webデザイン編集委員会，“Webデザイン-コンセプトメイキングから運用まで-　改訂版”，CG-ARTS協会(2013)．
