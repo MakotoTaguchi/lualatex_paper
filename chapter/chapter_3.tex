@@ -77,6 +77,110 @@ Tensorflow.jsを活用したJavaScript APIである.
 
 \end{itemize}
 今回は,顔検出と表情認識の機能を使い,表情分析した値をグラフ化することを目的とする.
+また,日々の提出された写真の笑顔度に応じてポイントを付け,加算されていく仕組みを作った.
+ソースコード3.1にその仕組みを実装したソースコードを示す. \\
+
+\renewcommand{\lstlistingname}{ソースコード}
+
+\begin{lstlisting}[caption=表情分析]
+  const handleImage = async () => {
+    // 顔を検出して,表情の値を変数detectionに代入する
+    const detections = await faceapi
+      .detectAllFaces(imgRef.current, new faceapi.TinyFaceDetectorOptions())
+      .withFaceExpressions();
+
+    // ここから笑顔度に応じてポイントを付ける
+
+    // happyの値が0.7以上の場合
+    if (detections[0].expressions.happy >= 0.7) {
+      setObject({
+        expressions: {
+          angry: detections[0].expressions.angry,
+          disgusted: detections[0].expressions.disgusted,
+          fearful: detections[0].expressions.fearful,
+          happy: detections[0].expressions.happy,
+          neutral: detections[0].expressions.neutral,
+          sad: detections[0].expressions.sad,
+          surprised: detections[0].expressions.surprised,
+        },
+        // ポイントは3点
+        point: 3,
+      });
+    } else if (
+      // happyの値が0.5以上または
+      detections[0].expressions.happy >= 0.5 ||
+      // surprisedの値が0.7以上または
+      detections[0].expressions.surprised >= 0.7 ||
+      // neutralの値が0.7以上の場合
+      detections[0].expressions.neutral >= 0.7
+    ) {
+      setObject({
+        expressions: {
+          angry: detections[0].expressions.angry,
+          disgusted: detections[0].expressions.disgusted,
+          fearful: detections[0].expressions.fearful,
+          happy: detections[0].expressions.happy,
+          neutral: detections[0].expressions.neutral,
+          sad: detections[0].expressions.sad,
+          surprised: detections[0].expressions.surprised,
+        },
+        // ポイントは2点
+        point: 2,
+      });
+    } else if (
+      // happyの値が0.3以上または
+      detections[0].expressions.happy >= 0.3 ||
+      // surprisedの値が0.5以上または
+      detections[0].expressions.surprised >= 0.5 ||
+      // neutralの値が0.5以上の場合
+      detections[0].expressions.neutral >= 0.5
+    ) {
+      setObject({
+        expressions: {
+          angry: detections[0].expressions.angry,
+          disgusted: detections[0].expressions.disgusted,
+          fearful: detections[0].expressions.fearful,
+          happy: detections[0].expressions.happy,
+          neutral: detections[0].expressions.neutral,
+          sad: detections[0].expressions.sad,
+          surprised: detections[0].expressions.surprised,
+        },
+        // ポイントは1点
+        point: 1,
+      });
+    // それ以外場合
+    } else {
+      setObject({
+        expressions: {
+          angry: detections[0].expressions.angry,
+          disgusted: detections[0].expressions.disgusted,
+          fearful: detections[0].expressions.fearful,
+          happy: detections[0].expressions.happy,
+          neutral: detections[0].expressions.neutral,
+          sad: detections[0].expressions.sad,
+          surprised: detections[0].expressions.surprised,
+        },
+        // ポイントは0点
+        point: 0,
+      });
+    }
+  };
+
+  // 学習モデルを読み込んでfaceapiを使える様にする
+  useEffect(() => {
+    const loadModels = () => {
+      Promise.all([
+        faceapi.nets.tinyFaceDetector.loadFromUri("/models"),
+        faceapi.nets.faceLandmark68Net.loadFromUri("/models"),
+        faceapi.nets.faceExpressionNet.loadFromUri("/models"),
+      ])
+        .then(handleImage)
+        .catch((e) => console.log(e));
+    };
+
+    imgRef.current && loadModels();
+  }, []);
+\end{lstlisting}
 	
 \section{Material-UIについて}
 \label{sec:reference_material}
@@ -107,7 +211,59 @@ Google運営のサービスのことである.認証方法には、主に以下�
 本システムではFirebase Authenticationのソーシャルログイン機能として
 提供されている,Googleサインインを利用してアプリケーションの認証システムを作成した. 
 GoogleサインインはユーザーのGoogleアカウントを用いてアプリケーションの
-ログインを可能にするシステムである. \\
+ログインを可能にするシステムである. 
+ソースコード3.2にGoogleサインインを実装したソースコードを記載する. \\
+
+\begin{lstlisting}[caption=Googleログインの実装]
+  const SignIn = () => {
+    // ここからGoogleログイン
+  const signInWithGoogle = () => {
+    // サインインポップアップ画面を表示
+    signInWithPopup(auth, provider).then((result) => {
+      // 初めてログインしたかどうかの判定
+      const isNewUser = getAdditionalUserInfo(result)?.isNewUser;
+      if (isNewUser) {
+        addDB();
+      } else {
+        updateDB();
+      }
+    });
+  };
+
+  // ドキュメント追加
+  const addDB = async () => {
+    await addDoc(collection(db, "users"), {
+      // googleのアカウント名
+      name: auth.currentUser.displayName,
+      // Gmailアドレス
+      email: auth.currentUser.email,
+      // ログイン日時
+      login: serverTimestamp(),
+      // 笑みポイント
+      point: 0,
+      // 役職
+      role: "employee",
+      // ユーザーID
+      uid: auth.currentUser.uid,
+    });
+  };
+
+  // ドキュメントフィールド更新
+  const updateDB = async () => {
+    // ユーザー情報の検索
+    const querySnapshot = await getDocs(
+      query(collection(db, "users"), where("uid", "==", auth.currentUser.uid))
+    );
+    // ドキュメントIDの取得
+    const docId = querySnapshot.docs.map((doc) => doc.id).toString();
+    await updateDoc(doc(db, "users", docId), {
+      login: serverTimestamp(),
+    });
+  };
+\end{lstlisting}
+
+\vspace{12mm}
+
 　Firebase Authenticationを使用した理由は,認証の安全性を外部に任せることができるからである.
 認証システムは,ユーザーの個人情報を預かることになるため,自前で実装するのは危険であり,
 万が一,個人情報が流出してしまうおそれがある.さらに,個人情報を保護して運用していく
@@ -116,9 +272,8 @@ GoogleサインインはユーザーのGoogleアカウントを用いてアプ�
 　ソーシャルログイン機能を利用することで,ユーザーは本アプリケーションのIDと
 パスワードを覚えておく必要がなくなる.また,IDとパスワードを自分で設定してロ
 グインするよりも手順が減るため,ユーザーにログインしてもらうハードルを低くす
-ることができる. 
-
-\clearpage
+ることができる. \\
+　
 
 \section{Cloud Firestore}
 \label{sec:reference_cloud}
