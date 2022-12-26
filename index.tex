@@ -2,7 +2,9 @@
 
 \documentclass[12pt]{ltjsreport}%LuaLaTeX対応
 \renewcommand{\bibname}{参考文献} 
-\usepackage{listings,jvlisting,graphicx, ascmac, url, array, ./style/eclbkbox}
+\usepackage{listings,jvlisting,graphicx, ascmac, url, array, ./style/eclbkbox,fancyheadings}
+\usepackage[luatex,pdfencoding=auto]{hyperref}
+\hypersetup{unicode,bookmarksnumbered=true,hidelinks,final}
 
 \lstset{
   basicstyle={\ttfamily},
@@ -96,15 +98,14 @@
 %%%%%%%参考文献　start%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{thebibliography}{99}
 
-\bibitem{Webデザイン}
-Webデザイン編集委員会，“Webデザイン-コンセプトメイキングから運用まで-　改訂版”，CG-ARTS協会(2013)．
+\bibitem{パーソルホールディングス株式会社}
+パーソルホールディングス株式会社,
+\url{https://www.persol-group.co.jp/news/20211111_9085/} (2022 年 8 月 31 日)
 
-\bibitem{数値計算法}
-三井田惇郎/須田宇宙，“数値計算法　第2版”，森北出版株式会社(2013)．
-
+\bibitem{厚生労働省}
+厚生労働省,
+\url{https://www.no-harassment.mhlw.go.jp/foundation/statistics/} (2022 年 8 月 31 日)
 
 \end{thebibliography}
-%%%%%%%参考文献　end%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\end{document}
 
-%%%%%%%コンテンツ　end%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\end{document}
