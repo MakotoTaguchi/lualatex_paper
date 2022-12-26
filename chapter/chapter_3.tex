@@ -19,37 +19,28 @@
 
 \section{Reactについて}
 \label{sec:reference_quote}
-Reactは,UI（ユーザインタフェース）部分の構築に特化したJavaScriptのライブラリで,
-React.jsとも呼ばれる.
-SNSで有名なMeta社（旧Facebook社）が自社サービスの機能拡張に伴うコードの複雑化によって
-維持管理がしにくくなることを防ぐために開発した.
-コーディングコストが少なく,開発規模が大きくなっても管理しやすいといった特長もあり,
-現在では開発元であるFacebook社のサービスであるFacebookやInstagramはもちろんのこと,
-Yahoo!やAirbnb,Reddit,Netflix,Slack,Uberといった世界的なWebサイトや
-Webアプリで利用されるなど,世界中の多くの企業で採用されており,日本でも注目を集める
-など,今最も勢いのあるライブラリである.
-今回のシステム開発にReactを採用した理由は三つある.
+React[14]は,JavaScriptのライブラリで,UIの構築に特化しており,Meta社が開発した.
+コーディングコストが少なく,開発規模が大きくなっても管理しやすいといった特長がある.
+現在ではFacebookやInstagramといった世界的なWebサイトや
+Webアプリで利用されている.
+今回のシステム開発にReactを採用した理由は三つあり,以下に示す.
 
 	\begin{enumerate}
-		\item パフォーマンスが良い \\
-		Reactには,仮想DOM(Virtual Document Object Model)というレンダリング機構が
-		備わっている.仮装DOMとは、実際のDOMではなく, React内部に持っている 
-		DOMの情報である. Reactを使うと,この仮想DOMと実際のHTML上のDOMを
-		比較したときに出てくる違いだけが,毎回HTML上に再適用される.
-		そのため画面全体がReactで構成されていたとしても,必要な部分しか更新されず
-		非常に高速に動作するため,パフォーマンスが良い.\\
+		\item パフォーマンスが良い点 \\
+		Reactには,仮想DOMというレンダリング機構が備わっている.
+    仮想DOMを用いることで全体ではなく,変更箇所だけを更新するためレンダリングが高速に動作する.
+    必要な部分しか更新されず非常に高速に動作するため,パフォーマンスが良い.\\
 
 		\item UIコンポーネントのライブラリが多い \\
-		Reactは,世界中で使われているため,Reactのライブラリを使ってUIをコンポート化
-		するようになってきている.あらかじめButtonやFormなどのUIパーツを
-		Reactコンポーネントとして扱えるようにして,セット化したものが多くある.
-		これらを使えば,今風の洗練された画面を作ることができる.\\
+		Reactは,Reactのライブラリを使ってUIをコンポート化するようになってきている.
+    あらかじめボタンやフォームなどのUIパーツをReactコンポーネントとして扱えるようにして,
+    セット化したものが多くあり,これらを使用すれば,自分でデザインすることなく
+		ボタンやフォーム画面を作ることができる.\\
 
 		\item JavaScriptの知識があれば使える \\
 		基本的にReactはJavaScriptで書かれているため,
 		JavaScriptの知識があればアプリを開発することができる.
-		たとえJavaScriptの開発経験がなくても基本構文を理解していれば開発に
-		取り掛かれる.今回,我々はJavaScriptの学習を既に行なっていたので,
+		今回,我々はJavaScriptの学習を既に行なっており,学習コストが少なかったため
 		Reactを選んだ.
 	\end{enumerate}
 	
@@ -184,7 +175,7 @@ Tensorflow.jsを活用したJavaScript APIである.
 	
 \section{Material-UIについて}
 \label{sec:reference_material}
-Google社が自社のサービスに統一的なデザインを与えるために作成した,
+Material-UI[15]は,Google社が自社のサービスに統一的なデザインを与えるために作成した,
 デザインのガイドライン,または仕様書であるMaterial Designを
 Reactのコンポーネントとして使えるようにしたものである.
 本研究でMaterial Designを取り入れているのは,ユーザーにとってストレスが少なく,
@@ -192,7 +183,7 @@ Reactのコンポーネントとして使えるようにしたものである.
 
 \section{Firebase Authentication}
 \label{sec:reference_auth}
-Firebase Authenticationはユーザー認証機能を提供し,ユーザ情報をクラウドで保存してくれる,
+Firebase Authentication[16]はユーザー認証機能を提供し,ユーザ情報をクラウドで保存してくれる,
 Google運営のサービスのことである.認証方法には、主に以下が用意されている.
 
 \begin{itemize}
@@ -277,7 +268,7 @@ GoogleサインインはユーザーのGoogleアカウントを用いてアプ�
 
 \section{Cloud Firestore}
 \label{sec:reference_cloud}
-Cloud FirestoreはGoogle社が提供しているモバイルアプリやウェブアプリのためのサーバーレスのNoSQLドキュメント指向データベースである.
+Cloud Firestore[17]はGoogle社が提供しているモバイルアプリやウェブアプリのためのサーバーレスのNoSQLドキュメント指向データベースである.
 リアルタイムでのデータ送受信、柔軟なデータ構造やオフライン時のサポートなどの特徴を持つ.
 GCPとFirebaseから提供されており,GCPから提供されているバージョンでは,
 前のバージョンであるCloud Databaseとの互換性を持つDatastoreモードとネイティブモードを選択できる.Datastoreモードでは,クライアントライブラリ数やオフラインデータの永続性がないなどのいくつかの機能が制限される. \\
